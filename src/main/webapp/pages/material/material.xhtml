@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:o="http://omnifaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css" />
+
+        <!-- Materialize CSS -->    
+    </h:head>
+    <h:body>
+        <p:messages />
+        <h:form enctype="multipart/form-data">
+            <div class="row">
+                <button class="btn blue" type="button" jsf:actionListener="#{materialMB.newMaterial()}">
+                    novo
+                    <f:ajax render="@form" />
+                </button>
+                <h:panelGroup class="card" layout="block" rendered="#{materialMB.material != null}">
+                    <div class="card-content" >
+                        <div class="row">
+                            <p>
+                                <span class="card-title">Cadastro de Material</span> <br />
+                            </p>
+                            <div class="col s12 l4 m6 input-field">
+                                <h:inputText value="#{materialMB.material.description}" disabled="#{materialMB.material == null}">
+                                    <f:ajax execute="@this" />
+                                </h:inputText>
+                                <label>descrição</label>
+                            </div>
+                            <div class="col s12 l4 m6">
+                                <label>unidade de medida</label>
+                                <h:selectOneMenu value="#{materialMB.material.unity}" class="browser-default" disabled="#{materialMB.material == null}" >
+                                    <f:selectItems value="#{materialMB.genderValues}" />
+                                    <f:ajax execute="@this" />
+                                </h:selectOneMenu>
+
+                            </div>
+                            <div class="col s12 l4 m6 input-field">
+                                <h:inputFile  value="#{materialMB.file}" disabled="#{materialMB.material == null}">
+                                    <f:ajax execute="@this" />
+                                </h:inputFile>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-action grey lighten-3 right-align">
+                        <h:commandButton  class="btn green white-text" actionListener="#{materialMB.save()}" value="enviar" >
+                            <f:ajax execute="@form" render="@form" />
+                        </h:commandButton>
+                    </div>
+                </h:panelGroup>
+            </div>
+
+
+            <div class="row">
+                <h:dataTable value="#{materialMB.materialList}" var="material"  class="striped" >
+                    <h:column>
+                        <f:facet name="header">
+                            imagem
+                        </f:facet>
+                        <o:graphicImage width="40" height="40" value="#{materialImagesMB.getImage(material.ID)}" class="circle small" /> 
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            código
+                        </f:facet>
+                        #{material.ID}
+                    </h:column>
+                    <h:column >
+                        <f:facet name="header">
+                            descrição
+                        </f:facet>
+                        #{material.description}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            unidade
+                        </f:facet>
+                        #{material.unity}
+                    </h:column>
+
+                </h:dataTable>
+            </div>
+        </h:form>
+
+
+
+
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+
+    </h:body>
+</html>
+
