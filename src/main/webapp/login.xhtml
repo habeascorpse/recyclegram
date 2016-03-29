@@ -4,7 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Login Portal do Aluno</title>
+        <title>Login</title>
         <meta charset="utf-8" />
         <meta name="HandheldFriendly" content="True" />
         <meta name="MobileOptimized" content="320" />
@@ -14,81 +14,43 @@
         <meta name="_csrf" content="e62835df-f1a0-49ea-bce7-bf96f998119c" />
 
         <!-- Materialize CSS -->
-        
+
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css" />
-        
-        <!-- Materialize CSS -->    
-
-
     </h:head>
-
     <h:body>
-
-
-        <form action="${request.contextPath}/j_spring_security_check" method="post" >
-           
-
-            <div class="row" />
-            <div class="row" />
-
-            <div  >
-                <p class="center">
-                   
-                </p>
+        <form action="${request.contextPath}/j_spring_security_check" method="post">
+            <div>
                 <div class="row">
                     <div class="col s12 m8 l6 offset-l3 offset-m2">
                         <div class="card-panel small z-depth-4">
-
                             <div class="card-content row">
-
                                 <div class="col s12 m12 l12">
-
-                                    
-
                                     <!--   <i class="material-icons">perm_identity</i> -->
                                     <h4 class="center thin logo-login">Recycl@LL</h4>
-
-
                                     <input type="text" name="j_username" required="true" placeholder="Usuário" autofocus="true" />
                                 </div>
                                 <div class="col s12 m12 l12" >
                                     <input type="password" name="j_password" required="true" placeholder="Senha" />
                                 </div>
                                 <h:panelGroup class="col s12 m12 l12"  rendered="#{param.login_error}">
-                                    <div >
+                                    <div>
                                         <h:outputText styleClass="red-text" value="Verifique seu usuário e senha" rendered="#{param.login_error}"/>
                                     </div>
                                 </h:panelGroup>
 
-
                             </div>
                             <div class="card-action right-align" >
-                                <input type="submit" value="Autenticar" class="btn waves-effect waves-light green"  />
-
+                                <a href="cadastro.html" class="orange waves-effect waves-light btn">Cadastrar</a>
+                                <input type="submit" value="Autenticar" class="btn waves-effect waves-light green" />                                
                             </div>
-
                         </div>
                     </div>
                 </div>
-
             </div>   
-            
-
         </form>
-        <h:form>
-            <label>login</label><h:inputText value="#{register.login}" />
-            <label>senha</label><h:inputText value="#{register.password}" />
-            <label>mail</label><h:inputText value="#{register.mail}" />
-            <h:commandButton action="#{register.save()}" value="gravar"/>
-        </h:form>
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-        
-
     </h:body>
-
-
-
 </html>
 

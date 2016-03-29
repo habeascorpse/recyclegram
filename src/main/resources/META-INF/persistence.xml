@@ -2,11 +2,20 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="recyclegramPU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <jta-data-source>java:app/recyclegram</jta-data-source>
+    <jta-data-source>recyclegram_localhost_bruce</jta-data-source>
+    <class>org.recyclall.recyclegram2.domain.City</class>
+    <class>org.recyclall.recyclegram2.domain.Material</class>
+    <class>org.recyclall.recyclegram2.domain.MaterialRequest</class>
+    <class>org.recyclall.recyclegram2.domain.Offer</class>
+    <class>org.recyclall.recyclegram2.domain.UF</class>
+    <class>org.recyclall.recyclegram2.domain.User</class>
+    <class>org.recyclall.recyclegram2.domain.UserInfo</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>ALL</shared-cache-mode>
     <validation-mode>NONE</validation-mode>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="URL" value="jdbc:mysql://localhost:3306/recyclegram"></property>
     </properties>
   </persistence-unit>
 </persistence>

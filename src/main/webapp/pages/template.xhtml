@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+
+    <h:head>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css" />
+        <link rel="stylesheet" href="css/app.css" />
+
+        <!-- Materialize CSS --> 
+        <ui:insert name="header" />
+    </h:head>
+
+    <body>
+        <header>
+            <div class="navbar-fixed">
+                <nav>
+                    <div class="nav-wrapper blue">
+                        <a href="home.html" class="brand-logo left thin">Recycle@all</a>
+                        <ul class="right">
+                            <li><a href="material.html">Materiais</a></li>
+                            <li><a class="dropdown-button" href="#!" data-activates="dropdown1">#{dashboardMB.user.login}<i class="material-icons right">arrow_drop_down</i></a></li>
+                        </ul>
+                        <!--
+                        <ul id="slide-out" class="side-nav">
+                            <li><a href="material.html">Materiais</a></li>
+                        </ul>
+                        <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+                        -->
+                    </div>
+                </nav>
+
+                <ul id="dropdown1" class="dropdown-content">
+                    <li><a href="#!">Materiais</a></li>
+                    <li><a href="perfil.html">Meu Perfil</a></li>
+                    <li class="divider"></li>
+                    <li><a href="${request.contextPath}/j_spring_security_logout">sair</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <main>
+            <div class="container">
+                <ui:insert name="body"></ui:insert>
+            </div>
+        </main>
+        <footer>
+
+        </footer>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+        <script type="text/javascript">
+            $(".button-collapse").sideNav();
+        </script>
+    </body>
+</html>
+

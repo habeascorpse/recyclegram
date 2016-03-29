@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE Html>
+<ui:composition
+    template="template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:jsf="http://xmlns.jcp.org/jsf"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:o="http://omnifaces.org/ui">
+
+    <ui:define name="header">
+        <title>Materiais</title>
+    </ui:define>
+    <ui:define name="body">
+
+        <div class="row">
+            <div class="col s12">
+                <p:messages />
+                <h:form enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col s12 center-align">
+                            <button class="btn-large blue" type="button" jsf:actionListener="#{materialMB.newMaterial()}">
+                                Novo Material
+                                <f:ajax render="@form" />
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s12">
+                            <h:panelGroup class="card" layout="block" rendered="#{materialMB.material != null}">
+                                <div class="card-content" >
+                                    <div class="row">
+                                        <span class="card-title">Cadastro de Material</span> <br />
+                                        <div class="col s12 l5 m5 input-field">
+                                            <h:inputText value="#{materialMB.material.description}" disabled="#{materialMB.material == null}">
+                                                <f:ajax execute="@this" />
+                                            </h:inputText>
+                                            <label>descrição</label>
+                                        </div>
+                                        <div class="col s12 l2 m2">
+                                            <label>Un. Medida</label>
+                                            <h:selectOneMenu value="#{materialMB.material.unity}" class="browser-default" disabled="#{materialMB.material == null}" >
+                                                <f:selectItems value="#{materialMB.genderValues}" />
+                                                <f:ajax execute="@this" />
+                                            </h:selectOneMenu>
+
+                                        </div>
+                                        <div class="col s12 l5 m5 input-field">
+                                            <div class="file-field input-field">
+                                                <div class="btn orange">
+                                                    <span>Selecione</span>
+                                                    <h:inputFile  value="#{materialMB.file}" disabled="#{materialMB.material == null}">
+                                                        <f:ajax execute="@this" />
+                                                    </h:inputFile>
+                                                </div>
+                                                <div class="file-path-wrapper">
+                                                    <input class="file-path validate" type="text" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-action grey lighten-3 right-align">
+                                    <h:commandButton  class="btn green white-text" actionListener="#{materialMB.save()}" value="enviar" >
+                                        <f:ajax execute="@form" render="@form" />
+                                    </h:commandButton>
+                                </div>
+                            </h:panelGroup> 
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="card white">
+                                <div class="card-content">
+                                    <span class="card-title">Materiais Cadastrados</span>
+                                    <h:dataTable value="#{materialMB.materialList}" var="material"  class="striped" >
+                                        <h:column>
+                                            <f:facet name="header">
+                                            </f:facet>
+                                            <o:graphicImage width="40" height="40" value="#{materialImagesMB.getImage(material.ID)}" class="circle small" /> 
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                Cod.
+                                            </f:facet>
+                                            #{material.ID}
+                                        </h:column>
+                                        <h:column >
+                                            <f:facet name="header">
+                                                Descrição
+                                            </f:facet>
+                                            #{material.description}
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                Un. Medida
+                                            </f:facet>
+                                            #{material.unity}
+                                        </h:column>
+                                    </h:dataTable>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css" />
+
+        <!-- Materialize CSS -->    
+
+    </h:head>
+    <h:body>
+        <h:form id="lista">
+            <div class="container">
+                <div class="row">
+                    <div class="col l3 grey lighten-3">
+                        <div class="col s12">
+                            <label>UF</label>
+                            <h:selectOneMenu value="#{requestMB.selectedUF}" class="browser-default" converter="omnifaces.SelectItemsIndexConverter">
+                                <f:selectItem itemLabel="selecione" />
+                                <f:selectItems value="#{requestMB.UFList}" var="uf" itemValue="#{uf}" itemLabel="#{uf.name}" />
+                            </h:selectOneMenu>
+                        </div>
+                        <div class="col s12">
+                            <button class="btn green white-text" type="submit" jsf:action="#{requestMB.pesquisar()}">
+                                <span class="material-icons">search</span>
+                                <f:ajax execute="@form" render="@form" />
+                            </button>
+                        </div>
+                    </div>
+                    <h:panelGroup class="col l9 orange accent-1" layout="block" id="content">
+                        <ul class="collection">
+                            <ui:repeat value="#{requestMB.requestList}" var="requestMaterial" >
+
+                                <li class="collection-item avatar">
+                                    <o:graphicImage value="#{materialImagesMB.getImage(requestMaterial.material.ID)}" class="circle" /> 
+                                    <span class="title">#{requestMaterial.material.description}</span>
+                                    <p>Qt: #{requestMaterial.quantity} #{requestMaterial.material.unity} <br />
+                                        #{requestMaterial.description}
+                                    </p>
+                                    <p>
+                                        #{requestMaterial.user.userInfo.name}<br/>
+                                        #{requestMaterial.user.userInfo.phoneNumber}<br/>
+                                        #{requestMaterial.user.userInfo.city.name}/#{requestMaterial.user.userInfo.city.UF.name}<br/>
+                                        <a href="#{requestMaterial.user.userInfo.GMapAddress}">Mapa</a>                                       
+                                    </p>
+                                    <a href="#!" class="secondary-content"><i class="material-icons red">grade</i></a>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </h:panelGroup>
+                </div>
+            </div>
+
+            <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+                <a class="btn-floating btn-large red modal-trigger btn" jsf:actionListener="#{requestMB.newRequest()}" onclick="$('#modal_new').openModal();" >
+                    <i class="large material-icons">add</i>
+                    <p:ajax  update="@all" />
+                </a>
+
+            </div>
+        </h:form>
+
+        <!-- Modal Structure -->
+        <div id="modal_new" class="modal modal-fixed-footer">
+            <h:form id="form_cad" >
+                <div class="modal-content">
+                    <h4>Nova Requisição</h4>
+                    <div class="row">
+                        <div class="col s12 input-field">
+                            <h:inputText value="#{requestMB.request.description}" >
+                                
+                            </h:inputText>
+                            <label>descrição</label>
+                        </div>
+                        <div class="col s12">
+                            <div class="col s8 input-field">
+                                <h:inputText value="#{requestMB.pesquisaMaterial}" >
+                                    <f:ajax execute="@form" />
+                                </h:inputText>
+                                <label>material</label>
+                            </div>
+                            <div class="col s4">
+                                <button class="btn blue white-text" jsf:action="#{requestMB.pesquisarMaterial()}"  >
+                                    <i class="material-icons">search</i>
+                                    <f:ajax render=":form_cad" />
+                                </button>
+                            </div>
+                            <div class="col s12">
+                                <h:dataTable id="material_table" class="striped" rows="5" value="#{requestMB.materialList}" var="material"
+                                             rendered="#{requestMB.selectedMaterial == null}" >
+                                    <h:column>
+                                        <f:facet name="header">
+                                            descrição
+                                        </f:facet>
+                                        #{material.description}
+                                    </h:column>
+                                    <h:column >
+                                        <div class="right-align">
+                                            <a jsf:actionListener="#{requestMB.setSelectedMaterial(material)}" class=" green" href="#">
+                                                add
+                                                <f:ajax execute="@form" render="@form" />
+                                            </a>
+                                        </div>
+                                    </h:column>
+                                </h:dataTable>
+                            </div>
+                        </div>
+                        <h:panelGroup rendered="#{requestMB.selectedMaterial != null }" layout="block" class="col s12 input-field">
+                            <input type="text" jsf:value="#{requestMB.request.quantity}" placeholder="#{requestMB.selectedMaterial.unity}" >
+                                <f:ajax execute="@form"  />
+                            </input>
+                            <label>Quantidade</label>
+                        </h:panelGroup>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn" jsf:action="#{requestMB.save()}"  onclick="$('#modal_new').closeModal();" >
+                        salvar
+                        <f:ajax execute="@form" render="@all" />
+                    </button>
+                </div>
+
+
+
+            </h:form>
+        </div>
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+
+    </h:body>
+</html>
+
